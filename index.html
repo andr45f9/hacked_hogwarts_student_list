@@ -10,9 +10,99 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <header></header>
-    <main></main>
-    <footer></footer>
+    <header>
+      <div id="hero_img">
+        <img src="/my_img/hogwart_banner.svg" alt="A banner for hacked hogwarts student list" />
+      </div>
+    </header>
+    <main>
+      <!-- SORT, FILTER AND SEARCH -->
+      <section id="narrow_info">
+        <div class="narrow_info_wrapper">
+          <h2>Sort by:</h2>
+          <select id="sort_dropdown">
+            <option value="sort0">All</option>
+            <option value="sort1">First name in alphabetical order</option>
+            <option value="sort2">Last name in alphabetical order</option>
+            <option value="sort3">Students in the same house</option>
+          </select>
+          <br /><br />
+          <h2>Filter by:</h2>
+          <select id="filter_dropdown">
+            <option value="filter0">All</option>
+            <option value="filter1">Gryffindor</option>
+            <option value="filter2">Ravenclaw</option>
+            <option value="filter3">Hufflepuff</option>
+            <option value="filter4">Slytherin</option>
+            <option value="filter5">Prefects</option>
+            <option value="filter6">Expelled students</option>
+            <option value="filter7">Non-expelled students</option>
+          </select>
+          <br /><br />
+          <input id="search_bar" type="text" placeholder="Search.." />
+          <button class="clear_button">Clear search</button>
+        </div>
+      </section>
+
+      <!-- THE LIST OF STUDENTS, EXPEL BUTTON AND INFO BOX -->
+      <section id="interface_list">
+        <div class="list_wrapper">
+          <p class="amount_txt">Amount of students displayed: <span class="amount_displayed">50</span></p>
+
+          <section class="list_container"></section>
+          <template id="student_list">
+            <tr>
+              <td><img class="list_img" src="" alt="" /></td>
+              <td data-field="fullname">FULLNAME</td>
+              <td data-field="trophy" data-trophy="false"></td>
+              <td data-field="star">☆</td>
+              <td><button class="expel_button">Expel</button></td>
+            </tr>
+          </template>
+        </div>
+        <div class="info_box_wrapper">
+          <div class="box_1">
+            <h4>Students in each house</h4>
+            <p class="gryffindor">Gryffindor: <span class="gryffindor_value"></span></p>
+            <p class="Ravenclaw">Ravenclaw: <span class="ravenclaw_value"></span></p>
+            <p class="hufflepuff">Hufflepuff: <span class="hufflepuff_value"></span></p>
+            <p class="slytherin">Slytherin: <span class="slytherin_value"></span></p>
+          </div>
+
+          <div class="box_2">
+            <h4>Student info</h4>
+            <p class="expelled">Expelled students: <span class="expelled_value"></span></p>
+            <p class="non_expelled">Non-expelled students: <span class="non_expelled_value"></span></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- POPUP WINDOW -->
+      <section id="popUp">
+        <button>X</button>
+        <article>
+          <img class="profile_pic" src="" alt="" />
+          <div class="popup_info_1">
+            <h3 class="firstname"></h3>
+            <h3 class="middlename"></h3>
+            <h3 class="nickname"></h3>
+            <h3 class="lastname"></h3>
+          </div>
+        </article>
+        <article>
+          <div class="popup_info_2">
+            <h3 class="blood_status"></h3>
+            <h3 class="expelled_status"></h3>
+            <h3 class="prefect"></h3>
+            <h3 class="inquisitorial"></h3>
+          </div>
+          <img class="crest_pic" src="" alt="" />
+        </article>
+      </section>
+    </main>
+    <footer>
+      <a href="#" id="back_to_top">Back to top</a>
+    </footer>
     <script src="script.js"></script>
   </body>
 </html>

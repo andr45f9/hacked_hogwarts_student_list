@@ -1,0 +1,118 @@
+/*** Generel settings ***/
+* {
+  box-sizing: border-box;
+}
+
+img {
+  vertical-align: middle;
+  width: 100%;
+  height: auto;
+}
+
+body {
+  background-color: #e7dfc3;
+}
+
+/* ------------------------------------------- */
+
+/*** Mobile view first ***/
+/* All font settings */
+h2 {
+  color: #5c2227;
+  font-size: 1rem;
+}
+
+h4 {
+  color: #5c2227;
+}
+
+p {
+  color: #5c2227;
+}
+
+#back_to_top {
+  color: #5c2227;
+}
+
+footer {
+  text-align: center;
+}
+/* ------------------------------------------- */
+
+/* Filter, sort and search bar */
+#narrow_info {
+  display: grid;
+}
+
+.narrow_info_wrapper {
+  justify-self: center;
+  margin-top: 3rem;
+}
+
+#sort_dropdown,
+#filter_dropdown {
+  border-radius: 0;
+  background-color: #daca8d;
+  border: 2px solid #c9b57b;
+  height: 15%;
+  width: 100%;
+  color: #5c2227;
+  cursor: pointer;
+}
+
+#search_bar {
+  border-radius: 6px;
+  background-color: #e6ddb9;
+  border: 2px solid #5c2227;
+  height: 13%;
+  color: #5c2227;
+  margin-top: 2rem;
+  padding-left: 0.5rem;
+}
+
+.clear_button {
+  border-radius: 6px;
+  background-color: #743b3b;
+  border: 2px solid #5c2227;
+  height: 13%;
+  color: #e7dfc3;
+  cursor: pointer;
+  padding: 0 0.6rem 0 0.6rem;
+  margin-left: 0.3rem;
+}
+
+/* ------------------------------------------- */
+/* List of students Landing page */
+#interface_list {
+  margin: 6rem 2rem 0 2rem;
+}
+
+.amount_txt {
+  text-align: end;
+}
+
+#student_list tr:nth-child(odd) td {
+  background-color: #d29345;
+}
+
+#student_list tr:nth-child(even) td {
+  background-color: #b86c26;
+}
+/* ------------------------------------------- */
+/* 2 Boxes with information */
+.box_1,
+.box_2 {
+  width: 300px;
+  height: 300px;
+  background-color: #c9b57b;
+  padding: 1rem;
+  margin-bottom: 2rem;
+}
+
+.box_1 h4,
+.box_2 h4 {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+/* ------------------------------------------- */
