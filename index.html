@@ -19,28 +19,34 @@
       <!-- SORT, FILTER AND SEARCH -->
       <section id="narrow_info">
         <div class="narrow_info_wrapper">
-          <h2>Sort by:</h2>
-          <select id="sort_dropdown">
-            <option value="sort0">All</option>
-            <option value="sort1">First name in alphabetical order</option>
-            <option value="sort2">Last name in alphabetical order</option>
-            <option value="sort3">Students in the same house</option>
-          </select>
-          <br /><br />
-          <h2>Filter by:</h2>
-          <select id="filter_dropdown">
-            <option value="filter0">All</option>
-            <option value="filter1">Gryffindor</option>
-            <option value="filter2">Ravenclaw</option>
-            <option value="filter3">Hufflepuff</option>
-            <option value="filter4">Slytherin</option>
-            <option value="filter5">Prefects</option>
-            <option value="filter6">Expelled students</option>
-            <option value="filter7">Non-expelled students</option>
-          </select>
-          <br /><br />
-          <input id="search_bar" type="text" placeholder="Search.." />
-          <button class="clear_button">Clear search</button>
+          <div class="sort">
+            <h2>Sort by:</h2>
+            <select id="sort_dropdown">
+              <option value="sort0">All</option>
+              <option value="sort1">First name in alphabetical order</option>
+              <option value="sort2">Last name in alphabetical order</option>
+              <option value="sort3">Students in the same house</option>
+            </select>
+          </div>
+
+          <div class="filter">
+            <h2>Filter by:</h2>
+            <select id="filter_dropdown">
+              <option value="filter0">All</option>
+              <option value="filter1">Gryffindor</option>
+              <option value="filter2">Ravenclaw</option>
+              <option value="filter3">Hufflepuff</option>
+              <option value="filter4">Slytherin</option>
+              <option value="filter5">Prefects</option>
+              <option value="filter6">Expelled students</option>
+              <option value="filter7">Non-expelled students</option>
+            </select>
+          </div>
+
+          <div class="search">
+            <input id="search_bar" type="text" placeholder="Search.." />
+            <button class="clear_button">Clear search</button>
+          </div>
         </div>
       </section>
 

@@ -52,9 +52,9 @@ footer {
 #sort_dropdown,
 #filter_dropdown {
   border-radius: 0;
-  background-color: #daca8d;
-  border: 2px solid #c9b57b;
-  height: 15%;
+  background-color: #d7cc9e;
+  border: 2px solid #5c2227;
+  height: 4vh;
   width: 100%;
   color: #5c2227;
   cursor: pointer;
@@ -64,7 +64,7 @@ footer {
   border-radius: 6px;
   background-color: #e6ddb9;
   border: 2px solid #5c2227;
-  height: 13%;
+  height: 4vh;
   color: #5c2227;
   margin-top: 2rem;
   padding-left: 0.5rem;
@@ -74,7 +74,7 @@ footer {
   border-radius: 6px;
   background-color: #743b3b;
   border: 2px solid #5c2227;
-  height: 13%;
+  height: 4vh;
   color: #e7dfc3;
   cursor: pointer;
   padding: 0 0.6rem 0 0.6rem;
@@ -100,11 +100,16 @@ footer {
 }
 /* ------------------------------------------- */
 /* 2 Boxes with information */
+.info_box_wrapper {
+  display: grid;
+  justify-content: center;
+}
+
 .box_1,
 .box_2 {
   width: 300px;
   height: 300px;
-  background-color: #c9b57b;
+  background-color: #d29345d0;
   padding: 1rem;
   margin-bottom: 2rem;
 }
@@ -116,3 +121,68 @@ footer {
 }
 
 /* ------------------------------------------- */
+/*** Media queries ***/
+@media (min-width: 800px) {
+  .narrow_info_wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 30px;
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
+
+  .sort {
+    grid-column: 1/2;
+  }
+
+  .filter {
+    grid-column: 2/3;
+  }
+
+  .search {
+    grid-column: 3/4;
+  }
+
+  #sort_dropdown,
+  #filter_dropdown {
+    width: 100%;
+  }
+
+  #search_bar {
+    margin-top: 2.8rem;
+  }
+
+  .clear_button {
+    margin-top: 1rem;
+  }
+
+  .info_box_wrapper {
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    margin: 0 20rem;
+    gap: 30px;
+  }
+
+  .box_1,
+  .box_2 {
+    background-color: lightblue;
+  }
+}
+
+/* ------------------------------------------- */
+
+@media (min-width: 1200px) {
+  .info_box_wrapper {
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+    margin: 0 21rem;
+    gap: 40px;
+  }
+
+  .box_1,
+  .box_2 {
+    width: 360px;
+    height: 360px;
+    background-color: lightgoldenrodyellow;
+  }
+}
