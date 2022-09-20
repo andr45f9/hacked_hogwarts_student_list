@@ -22,12 +22,20 @@ const Student = {
   gender: "",
   star: false,
   trophy: false,
+  expelled: "",
+  nonExpelled: "",
+  prefect: "",
 };
 
 function start() {
   console.log("ready");
 
+  addingEventListeners();
   loadJSON();
+}
+
+function addingEventListeners() {
+  document.querySelectorAll("[data-action='filter']").forEach((option) => option.addEventListener("click", selectFilter));
 }
 
 async function loadJSON() {
@@ -87,12 +95,74 @@ function prepareStudents(list) {
   //Displaying the students array as a table in the console.
   console.table(allStudents);
 
-  displayList(allStudents);
+  displayStudent(allStudents);
 }
 
-function displayList(allStudents) {
+//------ALL filtering----------- Filtering by house or expelled students/non-expelled and all students.
+
+function selectFilter(event) {
+  const filter = event.target.dataset.filter;
+
+  console.log(`User selected: ${filter}`);
+  filterList(filter);
+}
+
+function filterList(filterBy) {
+  //Filter by house and expelled students
+  let filteredList = allStudents;
+
+  if (filterBy === "Gryffindor") {
+    filteredList = allStudents.filter(isGryffindor);
+  } else if (filterBy === "Ravenclaw") {
+    filteredList = allStudents.filter(isRavenclaw);
+  } else if (filterBy === "Hufflepuff") {
+    filteredList = allStudents.filter(isHufflepuff);
+  } else if (filterBy === "Slytherin") {
+    filteredList = allStudents.filter(isSlytherin);
+  } else if (filterBy === "Prefect") {
+    filteredList = allStudents.filter(isPrefect);
+  } else if (filterBy === "Expelled") {
+    filteredList = allStudents.filter(isExpelled);
+  } else if (filterBy === "NonExpelled") {
+    filteredList = allStudents.filter(isNonExpelled);
+  }
+
+  displayStudent(filteredList);
+}
+
+function isGryffindor(student) {
+  return student.house === "Gryffindor";
+}
+
+function isRavenclaw(student) {
+  return student.house === "Ravenclaw";
+}
+
+function isHufflepuff(student) {
+  return student.house === "Hufflepuff";
+}
+
+function isSlytherin(student) {
+  return student.house === "Slytherin";
+}
+
+function isPrefect(student) {
+  return student.star === "Prefect";
+}
+
+function isExpelled(student) {
+  return student.expelled === "Expelled";
+}
+
+function isNonExpelled(student) {
+  return student.nonExpelled === "NonExpelled";
+}
+
+//------ALL sorting----------- Sort by firt and last name from a-z and z-a and student in same house.
+
+function displayStudent(allStudents) {
   const container = document.querySelector(".list_container");
-  container.textContent = "";
+  container.innerHTML = "";
 
   allStudents.forEach((student) => {
     const template = document.querySelector("#student_list");
@@ -119,7 +189,7 @@ function displayList(allStudents) {
       //buildList();
     }
 
-    // set clone data for TROPFY
+    // set clone data for TROPHY
     clone.querySelector("[data-field=trophy]").dataset.trophy = student.trophy;
     clone.querySelector("[data-field=trophy]").addEventListener("click", clickTrophy);
 
