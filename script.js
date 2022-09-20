@@ -20,6 +20,8 @@ const Student = {
   image: "",
   house: "",
   gender: "",
+  star: false,
+  trophy: false,
 };
 
 function start() {
@@ -78,11 +80,58 @@ function prepareStudents(list) {
     //Getting the IMAGE URL by the lastname in lowercase + _ + the first letter of the first name and the .png.
     student.image = fullName.substring(fullName.lastIndexOf(" ")).trim().toLowerCase() + "_" + fullName.substring(0, 1).toLowerCase() + ".png";
 
-    allStudents.push(student); //storing our new object in the allStudents array.
+    //storing our new object in the allStudents array.
+    allStudents.push(student);
   });
 
   //Displaying the students array as a table in the console.
   console.table(allStudents);
 
-  //displayList();
+  displayList(allStudents);
+}
+
+function displayList(allStudents) {
+  const container = document.querySelector(".list_container");
+  container.textContent = "";
+
+  allStudents.forEach((student) => {
+    const template = document.querySelector("#student_list");
+    let clone = template.cloneNode(true).content;
+
+    clone.querySelector("[data-field=fullname]").textContent = student.firstName + " " + student.lastName;
+
+    // set clone data for STAR
+    if (student.star === true) {
+      clone.querySelector("[data-field=star]").textContent = "⭐";
+    } else {
+      clone.querySelector("[data-field=star]").textContent = "☆";
+    }
+
+    clone.querySelector("[data-field=star]").addEventListener("click", clickStar);
+
+    function clickStar() {
+      if (animal.star === true) {
+        animal.star = false;
+      } else {
+        animal.star = true;
+      }
+
+      //buildList();
+    }
+
+    // set clone data for TROPFY
+    clone.querySelector("[data-field=trophy]").dataset.trophy = student.trophy;
+    clone.querySelector("[data-field=trophy]").addEventListener("click", clickTrophy);
+
+    function clickTrophy() {
+      if (student.trophy === true) {
+        student.trophy = false;
+      } else {
+        //tryToMakeATrophyr(student);
+      }
+
+      //buildList();
+    }
+    container.appendChild(clone);
+  });
 }

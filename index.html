@@ -23,9 +23,11 @@
             <h2>Sort by:</h2>
             <select id="sort_dropdown">
               <option value="sort0">All</option>
-              <option value="sort1">First name in alphabetical order</option>
-              <option value="sort2">Last name in alphabetical order</option>
-              <option value="sort3">Students in the same house</option>
+              <option value="sort1">First name (a-z)</option>
+              <option value="sort2">First name (z-a)</option>
+              <option value="sort3">Last name (a-z)</option>
+              <option value="sort4">Last name (z-a)</option>
+              <option value="sort5">Students in the same house</option>
             </select>
           </div>
 
@@ -58,7 +60,6 @@
           <section class="list_container"></section>
           <template id="student_list">
             <tr>
-              <td><img class="list_img" src="" alt="" /></td>
               <td data-field="fullname">FULLNAME</td>
               <td data-field="trophy" data-trophy="false"></td>
               <td data-field="star">☆</td>

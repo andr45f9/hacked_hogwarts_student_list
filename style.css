@@ -91,24 +91,50 @@ footer {
   text-align: end;
 }
 
-#student_list tr:nth-child(odd) td {
-  background-color: #d29345;
+tr {
+  height: 8vh;
+  vertical-align: middle;
 }
 
-#student_list tr:nth-child(even) td {
-  background-color: #b86c26;
+td {
+  width: 100vw;
+  text-align: end;
 }
+
+tr:nth-child(odd) td {
+  background-color: #cf5e38d3;
+}
+
+tr:nth-child(even) td {
+  background-color: #d29345d4;
+}
+
+.expel_button {
+  background-color: #743b3b;
+  border: 2px solid #5c2227;
+  color: #e7dfc3;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-right: 2rem;
+}
+
+[data-field="fullname"] {
+  padding-left: 1rem;
+}
+
 /* ------------------------------------------- */
 /* 2 Boxes with information */
 .info_box_wrapper {
   display: grid;
   justify-content: center;
+  margin-top: 4rem;
 }
 
 .box_1,
 .box_2 {
   width: 300px;
-  height: 300px;
+  height: 250px;
   background-color: #d29345d0;
   padding: 1rem;
   margin-bottom: 2rem;
@@ -118,6 +144,28 @@ footer {
 .box_2 h4 {
   text-align: center;
   margin-bottom: 3rem;
+}
+
+/* ------------------------------------------- */
+
+/* ****** STAR ****** */
+
+[data-field="star"] {
+  cursor: pointer;
+  font-size: 23px;
+}
+/* ------------------------------------------- */
+
+/* ****** WINNERS ****** */
+td[data-field="trophy"]::after {
+  content: "🏆";
+  cursor: pointer;
+  font-size: 20px;
+  margin-left: 3rem;
+}
+
+td[data-field="trophy"][data-winner="false"]::after {
+  filter: grayscale(1);
 }
 
 /* ------------------------------------------- */
@@ -161,28 +209,50 @@ footer {
     justify-items: center;
     margin: 0 20rem;
     gap: 30px;
+    margin-top: 5rem;
   }
 
-  .box_1,
-  .box_2 {
-    background-color: lightblue;
+  [data-field="fullname"] {
+    padding-left: 3rem;
   }
 }
 
 /* ------------------------------------------- */
 
 @media (min-width: 1200px) {
+  .expel_button {
+    margin-left: 10rem;
+  }
+
+  [data-field="star"] {
+    font-size: 26px;
+  }
+
+  td[data-field="trophy"]::after {
+    font-size: 25px;
+    margin-left: 20rem;
+  }
+
+  .amount_txt {
+    margin-right: 12rem;
+  }
+
+  .list_container {
+    margin-left: 12rem;
+    margin-right: 12rem;
+  }
+
   .info_box_wrapper {
     grid-template-columns: 1fr 1fr;
     justify-items: center;
     margin: 0 21rem;
     gap: 40px;
+    margin-top: 6rem;
   }
 
   .box_1,
   .box_2 {
-    width: 360px;
-    height: 360px;
-    background-color: lightgoldenrodyellow;
+    width: 350px;
+    height: 300px;
   }
 }
