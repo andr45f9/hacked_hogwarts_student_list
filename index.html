@@ -22,12 +22,12 @@
           <div class="sort">
             <h2>Sort by:</h2>
             <select id="sort_dropdown">
-              <option value="sort0">All</option>
-              <option value="sort1">First name (a-z)</option>
-              <option value="sort2">First name (z-a)</option>
-              <option value="sort3">Last name (a-z)</option>
-              <option value="sort4">Last name (z-a)</option>
-              <option value="sort5">Students in the same house</option>
+              <option data-action="sort" data-sort="*">All</option>
+              <option data-action="sort" data-sort-direction="asc" data-sort="firstName">First name (a-z)</option>
+              <option data-action="sort" data-sort-direction="desc" data-sort="firstName">First name (z-a)</option>
+              <option data-action="sort" data-sort-direction="asc" data-sort="lastName">Last name (a-z)</option>
+              <option data-action="sort" data-sort-direction="desc" data-sort="lastName">Last name (z-a)</option>
+              <option data-action="sort" data-sort-direction="asc" data-sort="house">Students in the same house</option>
             </select>
           </div>
 

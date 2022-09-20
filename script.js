@@ -36,6 +36,8 @@ function start() {
 
 function addingEventListeners() {
   document.querySelectorAll("[data-action='filter']").forEach((option) => option.addEventListener("click", selectFilter));
+
+  document.querySelectorAll("[data-action='sort']").forEach((option) => option.addEventListener("click", selectSort));
 }
 
 async function loadJSON() {
@@ -159,7 +161,37 @@ function isNonExpelled(student) {
 }
 
 //------ALL sorting----------- Sort by firt and last name from a-z and z-a and student in same house.
+function selectSort(event) {
+  const sortBy = event.target.dataset.sort;
+  const sortDir = event.target.dataset.sortDirection;
 
+  console.log(`User selected: ${sortBy} - ${sortDir}`);
+  sortList(sortBy, sortDir);
+}
+
+function sortList(sortBy, sortDir) {
+  let sortedList = allStudents;
+  let direction = 1;
+
+  if (sortDir === "desc") {
+    direction = -1;
+  } else {
+    direction = 1;
+  }
+
+  sortedList = sortedList.sort(sortByProperty);
+
+  function sortByProperty(studentA, studentB) {
+    if (studentA[sortBy] < studentB[sortBy]) {
+      return -1 * direction;
+    } else {
+      return 1 * direction;
+    }
+  }
+  displayStudent(sortedList);
+}
+
+//------Displaying all the students in list view and popup-----------//
 function displayStudent(allStudents) {
   const container = document.querySelector(".list_container");
   container.innerHTML = "";
