@@ -20,11 +20,11 @@ const Student = {
   image: "",
   house: "",
   gender: "",
+  blood: "",
   star: false,
   trophy: false,
-  expelled: "",
-  nonExpelled: "",
-  prefect: "",
+  expelled: false,
+  crest: "",
 };
 
 const settings = {
@@ -160,7 +160,7 @@ function isSlytherin(student) {
 }
 
 function isPrefect(student) {
-  return student.star === "Prefect";
+  return student.trophy === "Prefect";
 }
 
 function isExpelled(student) {
@@ -168,7 +168,7 @@ function isExpelled(student) {
 }
 
 function isNonExpelled(student) {
-  return student.nonExpelled === "NonExpelled";
+  return student.expelled === "NonExpelled";
 }
 
 //------ALL sorting----------- Sort by firt and last name from a-z and z-a and student in same house.
@@ -258,6 +258,28 @@ function displayStudent(allStudents) {
 
       //buildList();
     }
+    clone.querySelector("tr").addEventListener("click", () => showPopUp(student));
     container.appendChild(clone);
   });
+}
+
+function showPopUp(student) {
+  console.log("we are pop'ing");
+  const popup = document.querySelector("#popUp");
+  popup.style.display = "block";
+
+  popup.querySelector(".profile_pic").src = `images/${student.image}`;
+  popup.querySelector(".firstname").textContent = `First name: ${student.firstName}`;
+  popup.querySelector(".middlename").textContent = `Middle name: ${student.middelName}`;
+  popup.querySelector(".nickname").textContent = `Nick name: ${student.nickName}`;
+  popup.querySelector(".lastname").textContent = `Last name: ${student.lastName}`;
+  popup.querySelector(".gender").textContent = `Gender: ${student.gender}`;
+
+  popup.querySelector(".blood_status").textContent = `Blood status: ${student.blood}`;
+  popup.querySelector(".expelled_status").textContent = `Expelled: ${student.expelled}`;
+  popup.querySelector(".prefect").textContent = `Prefect: ${student.trophy}`;
+  popup.querySelector(".inquisitorial").textContent = `Inquisitorial Squad: ${student.star}`;
+  popup.querySelector(".crest_pic").src = student.crest;
+
+  document.querySelector("#close_button").addEventListener("click", () => (popUp.style.display = "none"));
 }
