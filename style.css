@@ -26,6 +26,10 @@ h4 {
   color: #5c2227;
 }
 
+h3 {
+  color: #5c2227;
+}
+
 p {
   color: #5c2227;
 }
@@ -98,7 +102,7 @@ tr {
 
 td {
   width: 100vw;
-  text-align: end;
+  text-align: start;
 }
 
 tr:nth-child(odd) td {
@@ -116,10 +120,19 @@ tr:nth-child(even) td {
   border-radius: 5px;
   padding: 5px 10px;
   cursor: pointer;
-  margin-right: 2rem;
+  padding-right: 1rem;
 }
 
 [data-field="fullname"] {
+  padding-left: 1rem;
+  cursor: pointer;
+}
+
+[data-field="fullname"]:hover {
+  text-shadow: 2px 1px 1px #d7cc9e;
+}
+
+[data-field="house"] {
   padding-left: 1rem;
 }
 
@@ -161,7 +174,7 @@ td[data-field="trophy"]::after {
   content: "🏆";
   cursor: pointer;
   font-size: 20px;
-  margin-left: 3rem;
+  padding-left: 1rem;
 }
 
 td[data-field="trophy"][data-winner="false"]::after {
@@ -169,6 +182,67 @@ td[data-field="trophy"][data-winner="false"]::after {
 }
 
 /* ------------------------------------------- */
+/*** Popup window mobile ***/
+#popUp {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: rgba(188, 170, 151, 0.636);
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
+  grid-template-columns: none;
+  margin: 0;
+}
+
+#close_button {
+  position: absolute;
+  right: 3.6rem;
+  top: 2.8rem;
+  border-radius: 10px;
+  width: 2rem;
+  height: 2rem;
+  color: #5c2227;
+  background-color: #d29345d4;
+  border: 1px solid #a8865cda;
+  box-shadow: 2px 2px 4px #5c222740;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+#popUp article {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  margin: 2rem auto;
+  border-radius: 10px;
+  background-color: #d7cc9e;
+}
+
+.profile_pic {
+  max-width: 30%;
+  margin: 2rem 0;
+}
+
+.popup_info_1,
+.popup_info_2 {
+  background-color: #e6ddb974;
+  border-radius: 20px;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  width: 80%;
+}
+
+.crest_pic {
+  max-width: 30%;
+  margin: 2rem 0;
+}
+
+/* ------------------------------------------- */
+
 /*** Media queries ***/
 @media (min-width: 800px) {
   .narrow_info_wrapper {
@@ -215,6 +289,28 @@ td[data-field="trophy"][data-winner="false"]::after {
   [data-field="fullname"] {
     padding-left: 3rem;
   }
+
+  #close_button {
+    right: 13.5rem;
+    top: 3rem;
+    border-radius: 10px;
+    width: 2.3rem;
+    height: 2.3rem;
+    font-size: 1.5rem;
+  }
+
+  #popUp article {
+    width: 60%;
+    border-radius: 20px;
+  }
+
+  .profile_pic {
+    max-width: 22%;
+  }
+
+  .crest_pic {
+    max-width: 17%;
+  }
 }
 
 /* ------------------------------------------- */
@@ -230,16 +326,15 @@ td[data-field="trophy"][data-winner="false"]::after {
 
   td[data-field="trophy"]::after {
     font-size: 25px;
-    margin-left: 20rem;
   }
 
   .amount_txt {
-    margin-right: 12rem;
+    margin-right: 5.5rem;
   }
 
   .list_container {
-    margin-left: 12rem;
-    margin-right: 12rem;
+    margin-left: 5rem;
+    margin-right: 5rem;
   }
 
   .info_box_wrapper {
@@ -254,5 +349,28 @@ td[data-field="trophy"][data-winner="false"]::after {
   .box_2 {
     width: 350px;
     height: 300px;
+  }
+
+  #close_button {
+    right: 28.5rem;
+    top: 3rem;
+    border-radius: 10px;
+    width: 2.2rem;
+    height: 2.2rem;
+    font-size: 1.3rem;
+  }
+
+  #popUp article {
+    width: 40%;
+    border-radius: 20px;
+  }
+
+  .profile_pic {
+    max-width: 25%;
+    margin-top: 4rem;
+  }
+
+  .crest_pic {
+    max-width: 20%;
   }
 }

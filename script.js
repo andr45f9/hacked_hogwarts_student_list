@@ -96,6 +96,9 @@ function prepareStudents(list) {
     //Getting the IMAGE URL by the lastname in lowercase + _ + the first letter of the first name and the .png.
     student.image = fullName.substring(fullName.lastIndexOf(" ")).trim().toLowerCase() + "_" + fullName.substring(0, 1).toLowerCase() + ".png";
 
+    //Getting the HOUSE CREST IMAGE URL
+    student.crest = house.substring(0, 1).toUpperCase() + house.substring(1).toLowerCase() + ".png";
+
     //storing our new object in the allStudents array.
     allStudents.push(student);
   });
@@ -225,6 +228,7 @@ function displayStudent(allStudents) {
     let clone = template.cloneNode(true).content;
 
     clone.querySelector("[data-field=fullname]").textContent = student.firstName + " " + student.lastName;
+    clone.querySelector("[data-field=house]").textContent = student.house;
 
     // set clone data for STAR
     if (student.star === true) {
@@ -279,7 +283,7 @@ function showPopUp(student) {
   popup.querySelector(".expelled_status").textContent = `Expelled: ${student.expelled}`;
   popup.querySelector(".prefect").textContent = `Prefect: ${student.trophy}`;
   popup.querySelector(".inquisitorial").textContent = `Inquisitorial Squad: ${student.star}`;
-  popup.querySelector(".crest_pic").src = student.crest;
+  popup.querySelector(".crest_pic").src = `crest_img/${student.crest}`;
 
   document.querySelector("#close_button").addEventListener("click", () => (popUp.style.display = "none"));
 }
