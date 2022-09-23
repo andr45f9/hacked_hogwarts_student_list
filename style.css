@@ -20,18 +20,26 @@ body {
 h2 {
   color: #5c2227;
   font-size: 1rem;
+  font-family: "Work Sans", sans-serif;
+  font-weight: 400;
 }
 
 h4 {
   color: #5c2227;
+  font-family: "Work Sans", sans-serif;
+  font-weight: 600;
 }
 
 h3 {
   color: #5c2227;
+  font-family: "Work Sans", sans-serif;
+  font-weight: 400;
 }
 
 p {
   color: #5c2227;
+  font-family: "Work Sans", sans-serif;
+  font-weight: 400;
 }
 
 #back_to_top {
@@ -40,6 +48,11 @@ p {
 
 footer {
   text-align: center;
+}
+
+button {
+  font-family: "Work Sans", sans-serif;
+  font-weight: 400;
 }
 /* ------------------------------------------- */
 
@@ -126,14 +139,20 @@ tr:nth-child(even) td {
 [data-field="fullname"] {
   padding-left: 1rem;
   cursor: pointer;
+  font-family: "Work Sans", sans-serif;
+  font-weight: 600;
+  color: #5c2227;
 }
 
 [data-field="fullname"]:hover {
-  text-shadow: 2px 1px 1px #d7cc9e;
+  text-shadow: 1px 1px 2px #d7cc9e;
 }
 
 [data-field="house"] {
   padding-left: 1rem;
+  font-family: "Work Sans", sans-serif;
+  font-weight: 400;
+  color: #5c2227;
 }
 
 /* ------------------------------------------- */
@@ -177,7 +196,7 @@ td[data-field="trophy"]::after {
   padding-left: 1rem;
 }
 
-td[data-field="trophy"][data-winner="false"]::after {
+td[data-field="trophy"][data-trophy="false"]::after {
   filter: grayscale(1);
 }
 
@@ -241,6 +260,60 @@ td[data-field="trophy"][data-winner="false"]::after {
   margin: 2rem 0;
 }
 
+/* ------------------------------------------- */
+
+/* ****** Dialog popup WARNING ****** */
+.hide {
+  visibility: hidden;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(188, 170, 151, 0.636);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dialog {
+  box-shadow: 1px 1px 10px rgb(97, 71, 49);
+  border-radius: 12px;
+  padding: 2rem;
+  background-color: #c47831;
+  color: #5c2227;
+  position: relative;
+}
+
+.two_buttons_remove,
+#removeother_button {
+  background-color: #743b3b;
+  border: 2px solid #5c2227;
+  color: #e7dfc3;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+button.close_button {
+  position: absolute;
+  right: 0.5rem;
+  top: 0.5rem;
+  border-radius: 20%;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: #743b3b;
+  color: #e7dfc3;
+  border: 2px solid #5c2227;
+  cursor: pointer;
+}
+
+.dialog h1 {
+  margin-top: 0;
+}
 /* ------------------------------------------- */
 
 /*** Media queries ***/
