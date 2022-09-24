@@ -2,17 +2,22 @@
 
 window.addEventListener("DOMContentLoaded", start);
 
-//url with JSON data
+//url with JSON data.
 const url = "https://petlatkea.dk/2021/hogwarts/students.json";
 
-//array where the new object should get stored in
+//array where the new object should get stored in.
 const allStudents = [];
 
-//array where we can add the students who gets expelled
+//array where we can add the students who gets expelled.
 const expelledStudents = [];
 
 //This variable will later on hold the json files.
 let list;
+
+//array for storing all the students who get searched for.
+let searchArray = [];
+
+let houseAmountArray = [];
 
 //Object with new "cleaned" data.
 const Student = {
@@ -28,6 +33,13 @@ const Student = {
   trophy: false,
   isExpelled: false,
   crest: "",
+};
+
+const MyObject = {
+  firstName: "Andrea",
+  middleName: "Marie",
+  lastName: "Schack",
+  gender: "Girl",
 };
 
 const settings = {
@@ -115,11 +127,6 @@ function prepareStudents(list) {
 
   showInfo();
   buildList();
-}
-
-//------ Practical infor displayed -----------//
-function showInfo() {
-  //console.log("yaaaas");
 }
 
 //------ALL filtering----------- Filtering by house or expelled students/non-expelled and all students.
@@ -233,33 +240,37 @@ function sortList(sortedList) {
 
 function selectSearch(event) {
   let search = event.target.value;
+  searchArray = allStudents.filter(searchTerm);
 
-  setSearch(search);
-}
-
-function setSearch(search) {
-  search = search.toLowerCase();
-
-  console.log(search);
-  buildList();
-}
-
-/* function searchList(searchedList) {
-  if (search === "Firstname") {
-    searchedList = allStudents.filter(isFirstname);
-  } else if (search === "Lastname") {
-    searchedList = allStudents.filter(isLastname);
+  function searchTerm(student) {
+    if (student.lastName == undefined && student.firstName.toLowerCase().includes(search)) {
+      return true;
+    } else if (student.firstName.toLowerCase().includes(search) || student.lastName.toLowerCase().includes(search)) {
+      return true;
+    } else return false;
   }
-  return searchedList;
+
+  displayStudent(searchArray);
 }
 
-function isFirstname(student) {
-  return student.firstName === "Firstname";
-}
+//------ Practical info about amount of students in each house -----------//
+function showInfo() {
+  houseAmountArray = allStudents.filter(showHouseAmount);
 
-function isLastname(student) {
-  return student.lastName === "Lastname";
-} */
+  function showHouseAmount(student) {
+    if (student.house === "Gryffindor") {
+      document.querySelector(".gryffindor_value").textContent = student.house.length;
+    } else if (student.house === "Ravenclaw") {
+      document.querySelector(".ravenclaw_value").textContent = student.house.length;
+    } else if (student.house === "Hufflepuff") {
+      document.querySelector(".hufflepuff_value").textContent = student.house.length;
+    } else if (student.house === "Slytherin") {
+      document.querySelector(".slytherin_value").textContent = student.house.length;
+    }
+
+    displayStudent(houseAmountArray);
+  }
+}
 
 //------Displaying all the students in list view and popup-----------//
 function buildList() {
@@ -268,6 +279,12 @@ function buildList() {
 
   //Amount of students currently displayed (number cahnges everytime the list gets changed)
   document.querySelector(".amount_displayed").textContent = currentList.length;
+
+  //Shows amount of students who are expelled
+  document.querySelector(".expelled_value").textContent = expelledStudents.length;
+
+  //Shows amount of students who are NOT expelled
+  document.querySelector(".non_expelled_value").textContent = allStudents.length;
 
   displayStudent(currentList);
 }
@@ -344,8 +361,8 @@ function displayStudent(allStudents) {
         //add student to expelledStudents
         expelledStudents.push(foundElement);
       }
-      console.log("array1", allStudents);
-      console.log("array2", expelledStudents);
+      //console.log("allStudents", allStudents);
+      //console.log("ExpelledStudents", expelledStudents);
 
       buildList();
     }
@@ -402,7 +419,7 @@ function showPopUp(student) {
 function tryToMakeAWinner(selectedStudent) {
   const trophies = allStudents.filter((student) => student.trophy === true);
   const numberOfTrophies = trophies.length;
-  const other = trophies.filter((student) => student.gender === selectedStudent.gender).shift();
+  const other = trophies.filter((student) => student.gender === selectedStudent.gender /* && student.house === selectedStudent.house */).shift();
 
   //check if there is another of the same type selected.
   if (other !== undefined) {
