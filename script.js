@@ -16,6 +16,8 @@ let houseAmountArray = []; //array storing the different all students filtered b
 let studentJSON;
 let familyJSON;
 
+let isHacked = false;
+
 //Object with new "cleaned" data.
 const Student = {
   firstName: "",
@@ -160,13 +162,45 @@ function prepareBloodStatus(bloodArray) {
   buildList();
 }
 
-//------HACKING the system----------- Insert myself into the students list, mess up the blood status and make myself un-expellable.
+//------HACK the system----------- Insert myself into the students list, mess up the blood status and make myself un-expellable.
 function hackTheSystem() {
   console.log("hacking");
-  const myself = Object.create(MyObject);
+  document.querySelector("#secret_button").removeEventListener("click", hackTheSystem);
+
+  addMyObject();
+  isHacked = true;
+  if (isHacked === true) {
+    document.querySelector("body").style.backgroundColor = "#F18759";
+  }
+  hackBlood();
+  buildList();
+}
+
+function addMyObject() {
+  const myself = Object.create(MyObject); //create my own object with my data in it.
 
   //storing my own object in the allStudents array by pushing it, so I can be seen on the students list.
   allStudents.push(myself);
+}
+
+function hackBlood() {
+  allStudents.forEach(changeBlood);
+
+  buildList();
+}
+
+function changeBlood(student) {
+  const number = Math.floor(Math.random() * 3) + 1;
+
+  if (student.blood === "Muggle" || student.blood === "Half-blood") {
+    student.blood = "Pure-blood";
+  } else if (number === 1) {
+    student.blood = "Muggle";
+  } else if (number === 2) {
+    student.blood = "Half-blood";
+  } else {
+    student.blood = "Pure-blood";
+  }
 
   buildList();
 }
