@@ -3,7 +3,8 @@
 window.addEventListener("DOMContentLoaded", start);
 
 //url with JSON data.
-const url = "https://petlatkea.dk/2021/hogwarts/students.json";
+const studentsURL = "https://petlatkea.dk/2021/hogwarts/students.json";
+const familiesURL = "https://petlatkea.dk/2021/hogwarts/families.json";
 
 //array where the new object should get stored in.
 const allStudents = [];
@@ -11,20 +12,24 @@ const allStudents = [];
 //array where we can add the students who gets expelled.
 const expelledStudents = [];
 
-//This variable will later on hold the json files.
-let list;
+//These variables will later on hold the json files from studentaURL and familiesJSON.
+let studentJSON;
+let familyJSON;
 
 //array for storing all the students who get searched for.
 let searchArray = [];
 
 let houseAmountArray = [];
 
+//array for storing all the students blood status from the familiesURL.
+let bloodArray = [];
+
 //Object with new "cleaned" data.
 const Student = {
   firstName: "",
   lastName: "",
   middleName: "undefined",
-  nickName: "",
+  nickName: "undefined",
   image: "",
   house: "",
   gender: "",
@@ -36,10 +41,15 @@ const Student = {
 };
 
 const MyObject = {
-  firstName: "Andrea",
-  middleName: "Marie",
+  firstName: "Andrea Marie",
+  middelName: "Roed",
   lastName: "Schack",
+  house: "Hufflepuff",
   gender: "Girl",
+  blood: "muggle",
+  star: false,
+  trophy: false,
+  isExpelled: false,
 };
 
 const settings = {
@@ -48,11 +58,13 @@ const settings = {
   sortDir: "asc",
 };
 
-function start() {
+async function start() {
   console.log("ready");
 
+  await loadFamilyJSON();
+  await loadStudentJSON();
+
   addingEventListeners();
-  loadJSON();
 }
 
 function addingEventListeners() {
@@ -61,20 +73,38 @@ function addingEventListeners() {
   document.querySelectorAll("[data-action='sort']").forEach((option) => option.addEventListener("click", selectSort));
 
   document.querySelectorAll("[data-action='search']").forEach((option) => option.addEventListener("input", selectSearch));
+
+  document.querySelector("#secret_button").addEventListener("click", hackTheSystem);
 }
 
-async function loadJSON() {
-  const response = await fetch(url);
+async function loadStudentJSON() {
+  const response = await fetch(studentsURL);
   const json = await response.json();
 
-  list = json;
+  studentJSON = json;
 
   // when loaded, prepare objects
-  prepareStudents(list);
+  prepareStudents(studentJSON);
 }
 
-function prepareStudents(list) {
-  list.forEach((studentObject) => {
+async function loadFamilyJSON() {
+  const response = await fetch(familiesURL);
+  const json = await response.json();
+
+  // when loaded, prepare objects
+  handleBlood(json);
+}
+
+function handleBlood(json) {
+  bloodArray = json;
+
+  console.log(bloodArray);
+  prepareBloodStatus(bloodArray);
+}
+
+//------CLEANING the data and defining it----------- students and blood status.
+function prepareStudents(studentJSON) {
+  studentJSON.forEach((studentObject) => {
     const student = Object.create(Student); //Create object with cleaned data - store it in the allStudents array.
 
     //Making sure there is no extra space around any name, house nor gender.
@@ -129,7 +159,30 @@ function prepareStudents(list) {
   buildList();
 }
 
+function prepareBloodStatus(student) {
+  if (bloodArray.half.includes(student.lastName)) {
+    student.blood = "Half-blood";
+  } else if (bloodArray.pure.includes(student.lastName)) {
+    student.blood = "Pure-blood";
+  } else {
+    student.blood = "Muggle";
+  }
+
+  buildList();
+}
+
+//------HACKING the system----------- Insert myself into the students list, mess up the blood status and make myself un-expellable.
+
 //------ALL filtering----------- Filtering by house or expelled students/non-expelled and all students.
+function hackTheSystem() {
+  console.log("hacking");
+  const myself = Object.create(MyObject);
+
+  //storing my own object in the allStudents array.
+  allStudents.push(myself);
+
+  buildList();
+}
 
 function selectFilter(event) {
   const filter = event.target.dataset.filter;
@@ -255,6 +308,7 @@ function selectSearch(event) {
 
 //------ Practical info about amount of students in each house -----------//
 function showInfo() {
+  //Shows how many students there are in each house.
   houseAmountArray = allStudents.filter(showHouseAmount);
 
   function showHouseAmount(student) {
@@ -277,14 +331,14 @@ function buildList() {
   let currentList = filterList(allStudents);
   currentList = sortList(currentList);
 
-  //Amount of students currently displayed (number cahnges everytime the list gets changed)
-  document.querySelector(".amount_displayed").textContent = currentList.length;
-
   //Shows amount of students who are expelled
   document.querySelector(".expelled_value").textContent = expelledStudents.length;
 
   //Shows amount of students who are NOT expelled
   document.querySelector(".non_expelled_value").textContent = allStudents.length;
+
+  //Amount of students currently displayed (number cahnges everytime the list gets changed)
+  document.querySelector(".amount_displayed").textContent = currentList.length;
 
   displayStudent(currentList);
 }
@@ -300,7 +354,7 @@ function displayStudent(allStudents) {
     clone.querySelector("[data-field=fullname]").textContent = student.firstName + " " + student.lastName;
     clone.querySelector("[data-field=house]").textContent = student.house;
 
-    // set clone data for STAR
+    // set clone data for STAR/Inquisitorial squad
     if (student.star === true) {
       clone.querySelector("[data-field=star]").textContent = "⭐";
     } else {
@@ -319,7 +373,7 @@ function displayStudent(allStudents) {
       buildList();
     }
 
-    // set clone data for TROPHY
+    // set clone data for TROPHY/Prefect
     clone.querySelector("[data-field=trophy]").dataset.trophy = student.trophy;
     clone.querySelector("[data-field=trophy]").addEventListener("click", clickTrophy);
 

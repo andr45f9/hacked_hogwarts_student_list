@@ -315,6 +315,27 @@ button.close_button {
 }
 /* ------------------------------------------- */
 
+/* Back to top and Secret button footer */
+.back_to_top {
+  margin-top: 2rem;
+}
+
+.secret_wrapper {
+  display: grid;
+  justify-content: end;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+}
+
+#secret_button {
+  font-size: 30px;
+  background-color: #e7dfc3;
+  border-radius: 50%;
+  border: none;
+}
+
+/* ------------------------------------------- */
+
 /*** Media queries ***/
 @media (min-width: 800px) {
   .narrow_info_wrapper {
