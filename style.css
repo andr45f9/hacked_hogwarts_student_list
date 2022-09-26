@@ -287,14 +287,16 @@ td[data-field="trophy"][data-trophy="false"]::after {
   position: relative;
 }
 
-.two_buttons_remove,
-#removeother_button {
+#remove_b,
+#remove_a {
   background-color: #743b3b;
   border: 2px solid #5c2227;
   color: #e7dfc3;
   border-radius: 5px;
   padding: 5px 10px;
   cursor: pointer;
+  margin-right: 1.5rem;
+  margin-top: 1rem;
 }
 
 button.close_button {

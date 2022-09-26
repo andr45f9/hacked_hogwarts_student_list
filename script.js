@@ -6,23 +6,15 @@ window.addEventListener("DOMContentLoaded", start);
 const studentsURL = "https://petlatkea.dk/2021/hogwarts/students.json";
 const familiesURL = "https://petlatkea.dk/2021/hogwarts/families.json";
 
-//array where the new object should get stored in.
-const allStudents = [];
+const allStudents = []; //array where the new object should get stored in.
+const expelledStudents = []; //array where we can add the students who gets expelled.
 
-//array where we can add the students who gets expelled.
-const expelledStudents = [];
+let searchArray = []; //array for storing all the students who get searched for.
+let houseAmountArray = []; //array storing the different all students filtered by house, so we later can count how many students are in each house.
 
 //These variables will later on hold the json files from studentaURL and familiesJSON.
 let studentJSON;
 let familyJSON;
-
-//array for storing all the students who get searched for.
-let searchArray = [];
-
-let houseAmountArray = [];
-
-//array for storing all the students blood status from the familiesURL.
-let bloodArray = [];
 
 //Object with new "cleaned" data.
 const Student = {
@@ -43,10 +35,11 @@ const Student = {
 const MyObject = {
   firstName: "Andrea Marie",
   middelName: "Roed",
+  nickName: "undefined",
   lastName: "Schack",
   house: "Hufflepuff",
   gender: "Girl",
-  blood: "muggle",
+  blood: "Muggle",
   star: false,
   trophy: false,
   isExpelled: false,
@@ -61,8 +54,8 @@ const settings = {
 async function start() {
   console.log("ready");
 
-  await loadFamilyJSON();
   await loadStudentJSON();
+  await loadFamilyJSON();
 
   addingEventListeners();
 }
@@ -91,15 +84,10 @@ async function loadFamilyJSON() {
   const response = await fetch(familiesURL);
   const json = await response.json();
 
+  familyJSON = json;
+
   // when loaded, prepare objects
-  handleBlood(json);
-}
-
-function handleBlood(json) {
-  bloodArray = json;
-
-  console.log(bloodArray);
-  prepareBloodStatus(bloodArray);
+  prepareBloodStatus(familyJSON);
 }
 
 //------CLEANING the data and defining it----------- students and blood status.
@@ -119,7 +107,6 @@ function prepareStudents(studentJSON) {
     if (fullName.includes(" ") === false) {
       student.firstName = fullName.substring(0, 1).toUpperCase() + fullName.substring(1).toLowerCase();
     }
-    //console.log(student.firstName);
 
     //Getting the MIDDLE NAME and NICK NAME, and making it upper case.
     student.middelName = fullName.substring(fullName.indexOf(" "), fullName.lastIndexOf(" ")).trim().substring(0, 1).toUpperCase() + fullName.substring(fullName.indexOf(" "), fullName.lastIndexOf(" ")).trim().substring(1).toLowerCase();
@@ -132,8 +119,6 @@ function prepareStudents(studentJSON) {
 
     //Getting the LAST NAME and making it upper case.
     student.lastName = fullName.substring(fullName.lastIndexOf(" ") + 1, fullName.lastIndexOf(" ") + 2).toUpperCase() + fullName.substring(fullName.lastIndexOf(" ") + 2).toLowerCase();
-    //last name with a hyphen included --- have to do ---
-    //no last name  --- have to do ---
 
     //Getting the GENDER and making it upper case.
     student.gender = gender.substring(0, 1).toUpperCase() + gender.substring(1).toLowerCase();
@@ -143,7 +128,6 @@ function prepareStudents(studentJSON) {
 
     //Getting the IMAGE URL by the lastname in lowercase + _ + the first letter of the first name and the .png.
     student.image = fullName.substring(fullName.lastIndexOf(" ")).trim().toLowerCase() + "_" + fullName.substring(0, 1).toLowerCase() + ".png";
-    //getting img url with full first name  --- have to do ---
 
     //Getting the HOUSE CREST IMAGE URL
     student.crest = house.substring(0, 1).toUpperCase() + house.substring(1).toLowerCase() + ".png";
@@ -159,31 +143,35 @@ function prepareStudents(studentJSON) {
   buildList();
 }
 
-function prepareBloodStatus(student) {
-  if (bloodArray.half.includes(student.lastName)) {
-    student.blood = "Half-blood";
-  } else if (bloodArray.pure.includes(student.lastName)) {
-    student.blood = "Pure-blood";
-  } else {
+function prepareBloodStatus(bloodArray) {
+  allStudents.forEach((student) => {
     student.blood = "Muggle";
-  }
+    if (bloodArray.half.includes(student.lastName)) {
+      student.blood = "Half-blood";
+    } else if (bloodArray.pure.includes(student.lastName)) {
+      student.blood = "Pure-blood";
+    } else if (bloodArray.half.includes(student.lastName) && bloodArray.pure.includes(student.lastName)) {
+      student.blood = "Pure-blood";
+    } else {
+      student.blood = "Muggle";
+    }
+  });
 
   buildList();
 }
 
 //------HACKING the system----------- Insert myself into the students list, mess up the blood status and make myself un-expellable.
-
-//------ALL filtering----------- Filtering by house or expelled students/non-expelled and all students.
 function hackTheSystem() {
   console.log("hacking");
   const myself = Object.create(MyObject);
 
-  //storing my own object in the allStudents array.
+  //storing my own object in the allStudents array by pushing it, so I can be seen on the students list.
   allStudents.push(myself);
 
   buildList();
 }
 
+//------ALL filtering----------- Filtering by house or expelled students/non-expelled and all students.
 function selectFilter(event) {
   const filter = event.target.dataset.filter;
 
@@ -296,7 +284,7 @@ function selectSearch(event) {
   searchArray = allStudents.filter(searchTerm);
 
   function searchTerm(student) {
-    if (student.lastName == undefined && student.firstName.toLowerCase().includes(search)) {
+    if (student.lastName && student.firstName.toLowerCase().includes(search)) {
       return true;
     } else if (student.firstName.toLowerCase().includes(search) || student.lastName.toLowerCase().includes(search)) {
       return true;
@@ -403,8 +391,9 @@ function displayStudent(allStudents) {
       const index = allStudents.findIndex((element) => {
         if (element === student) {
           return true;
+        } else {
+          return false;
         }
-        return false;
       });
 
       //use student's position to splice student fra allStudents
@@ -415,8 +404,6 @@ function displayStudent(allStudents) {
         //add student to expelledStudents
         expelledStudents.push(foundElement);
       }
-      //console.log("allStudents", allStudents);
-      //console.log("ExpelledStudents", expelledStudents);
 
       buildList();
     }
@@ -427,7 +414,6 @@ function displayStudent(allStudents) {
 }
 
 function showPopUp(student) {
-  console.log("we are pop'ing");
   const popup = document.querySelector("#popUp");
   popup.style.display = "block";
 
@@ -472,44 +458,13 @@ function showPopUp(student) {
 
 function tryToMakeAWinner(selectedStudent) {
   const trophies = allStudents.filter((student) => student.trophy === true);
-  const numberOfTrophies = trophies.length;
-  const other = trophies.filter((student) => student.gender === selectedStudent.gender /* && student.house === selectedStudent.house */).shift();
 
-  //check if there is another of the same type selected.
-  if (other !== undefined) {
-    removeOther(other);
-  } else if (numberOfTrophies >= 2) {
-    removeAorB(trophies[0], trophies[1]);
+  const otherSameHouse = trophies.filter((student) => student.house === selectedStudent.house);
+
+  if (otherSameHouse.length >= 2) {
+    removeAorB(otherSameHouse[0], otherSameHouse[1]);
   } else {
     makeWinner(selectedStudent);
-  }
-
-  function removeOther(other) {
-    //ask the user to ignore or remove the "other".
-    document.querySelector("#remove_other").classList.remove("hide");
-    document.querySelector("#remove_other .close_button").addEventListener("click", closeDialog);
-    document.querySelector("#remove_other #removeother_button").addEventListener("click", clickRemoveOther);
-
-    //Show the selected animal name on the button:
-    document.querySelector("#remove_other [data-field=otherwinner]").textContent = other.name;
-
-    //if user ignores then do nothing..
-    function closeDialog() {
-      //adding hide so the dialog box will be hidden when the user close the dialog box:
-      document.querySelector("#remove_other").classList.add("hide");
-      //remembering to remove eventListeners again:
-      document.querySelector("#remove_other .close_button").removeEventListener("click", closeDialog);
-      document.querySelector("#remove_other #removeother_button").removeEventListener("click", clickRemoveOther);
-    }
-
-    //if remove the "other" do this:
-    function clickRemoveOther() {
-      removeWinner(other);
-      makeWinner(selectedStudent);
-
-      buildList();
-      closeDialog();
-    }
   }
 
   function removeAorB(winnerA, winnerB) {
