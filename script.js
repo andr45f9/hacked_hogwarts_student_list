@@ -164,15 +164,33 @@ function prepareBloodStatus(bloodArray) {
 
 //------HACK the system----------- Insert myself into the students list, mess up the blood status and make myself un-expellable.
 function hackTheSystem() {
-  console.log("hacking");
-  document.querySelector("#secret_button").removeEventListener("click", hackTheSystem);
+  if (!isHacked) {
+    console.log("Hacking the systems ...");
 
-  addMyObject();
-  isHacked = true;
-  if (isHacked === true) {
+    addMyObject();
+
+    isHacked = true;
     document.querySelector("body").style.backgroundColor = "#F18759";
+
+    hackBlood();
+
+    //set interval kalder remove inquisitorial function
+    setInterval(removeStar, 10000);
+
+    buildList();
+  } else {
+    console.log("Systems are already hacked! access denied");
   }
-  hackBlood();
+}
+
+function removeStar() {
+  allStudents.forEach((student) => {
+    //fjern inquisitorial status
+    if (student.star) {
+      student.star = false;
+    }
+  });
+
   buildList();
 }
 
