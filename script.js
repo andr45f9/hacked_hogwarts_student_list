@@ -388,11 +388,18 @@ function displayStudent(allStudents) {
     function clickStar() {
       if (student.star === true) {
         student.star = false;
+      } else if (student.house === "Slytherin" || student.blood === "Pure-blood") {
+        makeStar(student);
       } else {
-        student.star = true;
+        student.star = false;
+        alert("Only pure-blooded students from Slytherin can join the Inquisitorial Squad!");
       }
 
       buildList();
+    }
+
+    function makeStar(chosenStudent) {
+      chosenStudent.star = true;
     }
 
     // set clone data for TROPHY/Prefect
@@ -419,24 +426,29 @@ function displayStudent(allStudents) {
     clone.querySelector(".expel_button").addEventListener("click", clickExpelBtn);
 
     function clickExpelBtn() {
-      student.isExpelled = !student.isExpelled;
+      if (student.lastName !== "Schack") {
+        student.isExpelled = !student.isExpelled;
 
-      //find student's position in allStudents
-      const index = allStudents.findIndex((element) => {
-        if (element === student) {
-          return true;
-        } else {
-          return false;
+        //find student's position in allStudents
+        const index = allStudents.findIndex((element) => {
+          if (element === student) {
+            return true;
+          } else {
+            return false;
+          }
+        });
+
+        //use student's position to splice student fra allStudents
+        if (index !== -1) {
+          const splicedArray = allStudents.splice(index, 1);
+          const foundElement = splicedArray[0];
+
+          //add student to expelledStudents
+          expelledStudents.push(foundElement);
         }
-      });
-
-      //use student's position to splice student fra allStudents
-      if (index !== -1) {
-        const splicedArray = allStudents.splice(index, 1);
-        const foundElement = splicedArray[0];
-
-        //add student to expelledStudents
-        expelledStudents.push(foundElement);
+      } else {
+        alert("YOU CAN'T EXPEL ME SUCKEEER!");
+        console.log("YOU CAN'T EXPEL ME SUCKEEER!");
       }
 
       buildList();
