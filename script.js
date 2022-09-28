@@ -69,6 +69,8 @@ function addingEventListeners() {
 
   document.querySelectorAll("[data-action='search']").forEach((option) => option.addEventListener("input", selectSearch));
 
+  document.querySelector(".clear_button").addEventListener("click", clearAllBtn);
+
   document.querySelector("#secret_button").addEventListener("click", hackTheSystem);
 }
 
@@ -346,6 +348,11 @@ function selectSearch(event) {
   displayStudent(searchArray);
 }
 
+//------CLEAR ALL button----------- Clears the filter, the sort and the search.
+function clearAllBtn() {
+  console.log("can't figure out how to clear it all....");
+}
+
 //------ Practical info about amount of students in each house -----------//
 function showInfo() {
   //Shows how many students there are in each house.
@@ -489,7 +496,7 @@ function showPopUp(student) {
   popup.querySelector(".gender").textContent = `Gender: ${student.gender}`;
 
   popup.querySelector(".blood_status").textContent = `Blood status: ${student.blood}`;
-  popup.querySelector(".expelled_status").textContent = `Expelled: ${student.expelled}`;
+  popup.querySelector(".expelled_status").textContent = `Expelled: ${student.isExpelled}`;
   popup.querySelector(".prefect").textContent = `Prefect: ${student.trophy}`;
   popup.querySelector(".inquisitorial").textContent = `Inquisitorial Squad: ${student.star}`;
   popup.querySelector(".crest_pic").src = `crest_img/${student.crest}`;
